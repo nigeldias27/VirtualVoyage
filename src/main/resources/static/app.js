@@ -1,5 +1,5 @@
-const LOCAL_IP_ADDRESS = "192.168.1.88:8000"; // change it
-const LOCAL_IP = "192.168.1.88";
+const LOCAL_IP_ADDRESS = "192.168.136.84:8000"; // change it
+const LOCAL_IP = "192.168.136.84";
 const getElement = (id) => document.getElementById(id);
 const [
   btnConnect,
@@ -27,8 +27,6 @@ let remoteDescriptionPromise,
   rtcPeerConnection,
   isCaller;
 
-// you can use public stun and turn servers,
-// but we don't need for local development
 const iceServers = {
   iceServers: [
     //    { urls: `stun:192.168.1.88:3478` },
@@ -43,7 +41,7 @@ const iceServers = {
 const streamConstraints = { audio: true, video: true };
 
 let socket = io.connect(`http://${LOCAL_IP_ADDRESS}`, { secure: false });
-// let socket = io.connect("http://192.168.0.3:8000");
+// let socket = io.connect("http://192.168.1.88:8000");
 
 btnToggleVideo.addEventListener("click", () => toggleTrack("video"));
 btnToggleAudio.addEventListener("click", () => toggleTrack("audio"));

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Calendar</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script nonce="d0da052b-2d7e-4d5d-9a49-2dfcfce64af6">
+      try {
+        (function (w, d) {
+          !(function (kL, kM, kN, kO) {
+            kL[kN] = kL[kN] || {};
+            kL[kN].executed = [];
+            kL.zaraz = { deferred: [], listeners: [] };
+            kL.zaraz.q = [];
+            kL.zaraz._f = function (kP) {
+              return async function () {
+                var kQ = Array.prototype.slice.call(arguments);
+                kL.zaraz.q.push({ m: kP, a: kQ });
+              };
+            };
+            for (const kR of ["track", "set", "debug"])
+              kL.zaraz[kR] = kL.zaraz._f(kR);
+            kL.zaraz.init = () => {
+              var kS = kM.getElementsByTagName(kO)[0],
+                kT = kM.createElement(kO),
+                kU = kM.getElementsByTagName("title")[0];
+              kU && (kL[kN].t = kM.getElementsByTagName("title")[0].text);
+              kL[kN].x = Math.random();
+              kL[kN].w = kL.screen.width;
+              kL[kN].h = kL.screen.height;
+              kL[kN].j = kL.innerHeight;
+              kL[kN].e = kL.innerWidth;
+              kL[kN].l = kL.location.href;
+              kL[kN].r = kM.referrer;
+              kL[kN].k = kL.screen.colorDepth;
+              kL[kN].n = kM.characterSet;
+              kL[kN].o = new Date().getTimezoneOffset();
+              if (kL.dataLayer)
+                for (const kY of Object.entries(
+                  Object.entries(dataLayer).reduce(
+                    (kZ, k$) => ({ ...kZ[1], ...k$[1] }),
+                    {}
+                  )
+                ))
+                  zaraz.set(kY[0], kY[1], { scope: "page" });
+              kL[kN].q = [];
+              for (; kL.zaraz.q.length; ) {
+                const la = kL.zaraz.q.shift();
+                kL[kN].q.push(la);
+              }
+              kT.defer = !0;
+              for (const lb of [localStorage, sessionStorage])
+                Object.keys(lb || {})
+                  .filter((ld) => ld.startsWith("_zaraz_"))
+                  .forEach((lc) => {
+                    try {
+                      kL[kN]["z_" + lc.slice(7)] = JSON.parse(lb.getItem(lc));
+                    } catch {
+                      kL[kN]["z_" + lc.slice(7)] = lb.getItem(lc);
+                    }
+                  });
+              kT.referrerPolicy = "origin";
+              kT.src =
+                "/cdn-cgi/zaraz/s.js?z=" +
+                btoa(encodeURIComponent(JSON.stringify(kL[kN])));
+              kS.parentNode.insertBefore(kT, kS);
+            };
+            ["complete", "interactive"].includes(kM.readyState)
+              ? zaraz.init()
+              : kL.addEventListener("DOMContentLoaded", zaraz.init);
+          })(w, d, "zarazData", "script");
+        })(window, document);
+      } catch (e) {
+        throw (fetch("/cdn-cgi/zaraz/t"), e);
+      }
+    </script>
+  </head>
+  <body>
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 text-center mb-5">
+            <h2 class="heading-section">Virtual Voyage</h2>
+            <button
+              onclick="eventclicked()"
+              style="
+                background-color: rgb(115, 26, 236);
+                border-radius: 5px;
+                color: rgb(255, 255, 255);
+              "
+            >
+              Create Instant Meeting
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="content w-100">
+              <div class="calendar-container">
+                <div class="calendar">
+                  <div class="year-header">
+                    <span class="left-button fa fa-chevron-left" id="prev">
+                    </span>
+                    <span class="year" id="label"></span>
+                    <span class="right-button fa fa-chevron-right" id="next">
+                    </span>
+                  </div>
+                  <table class="months-table w-100">
+                    <tbody>
+                      <tr class="months-row">
+                        <td class="month">Jan</td>
+                        <td class="month">Feb</td>
+                        <td class="month">Mar</td>
+                        <td class="month">Apr</td>
+                        <td class="month">May</td>
+                        <td class="month">Jun</td>
+                        <td class="month">Jul</td>
+                        <td class="month">Aug</td>
+                        <td class="month">Sep</td>
+                        <td class="month">Oct</td>
+                        <td class="month">Nov</td>
+                        <td class="month">Dec</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="days-table w-100">
+                    <td class="day">Sun</td>
+                    <td class="day">Mon</td>
+                    <td class="day">Tue</td>
+                    <td class="day">Wed</td>
+                    <td class="day">Thu</td>
+                    <td class="day">Fri</td>
+                    <td class="day">Sat</td>
+                  </table>
+                  <div class="frame">
+                    <table class="dates-table w-100">
+                      <tbody class="tbody"></tbody>
+                    </table>
+                  </div>
+                  <button class="button" id="add-button">Add Event</button>
+                </div>
+              </div>
+              <div class="events-container"></div>
+              <div class="dialog" id="dialog">
+                <h2 class="dialog-header">Add New Event</h2>
+                <form class="form" id="form">
+                  <div class="form-container" align="center">
+                    <label class="form-label" id="valueFromMyButton" for="name"
+                      >Event name</label
+                    >
+                    <input class="input" type="text" id="name" maxlength="36" />
+                    <label class="form-label" id="valueFromMyButton" for="count"
+                      >Invitees</label
+                    >
+                    <input class="input" id="count" type="text" />
+                    <input
+                      type="button"
+                      value="Cancel"
+                      class="button"
+                      id="cancel-button"
+                    />
+                    <input
+                      type="button"
+                      value="OK"
+                      class="button button-white"
+                      id="ok-button"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/jquery.min.js"></script>
+    <script src="/popper.js"></script>
+    <script src="/bootstrap.min.js"></script>
+    <script src="/main.js"></script>
+    <script>
+      function eventclicked() {
+        window.location.href = "/video";
+      }
+    </script>
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js/v55bfa2fee65d44688e90c00735ed189a1713218998793"
+      integrity="sha512-FIKRFRxgD20moAo96hkZQy/5QojZDAbyx0mQ17jEGHCJc/vi0G2HXLtofwD7Q3NmivvP9at5EVgbRqOaOQb+Rg=="
+      data-cf-beacon='{"rayId":"878332a4181e595f","version":"2024.3.0","token":"cd0b4b3a733644fc843ef0b185f98241"}'
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

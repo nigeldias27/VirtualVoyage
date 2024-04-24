@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <input
+      id="username"
+      type="text"
+      class="form-control form-control-lg"
+      placeholder="Enter username"
+    />
+    <input
+      id="password"
+      type="text"
+      class="form-control form-control-lg"
+      placeholder="Enter password"
+    />
+    <p id="clbck"></p>
+    <button onclick="signUp()">Sign Up</button>
+    <script>
+      async function signUp() {
+        const res = await fetch("/api/user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+          }),
+        });
+        clbck = await res;
+        console.log(clbck);
+        document.getElementById("clbck").innerHTML = clbck;
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>
